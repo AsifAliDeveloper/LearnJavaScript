@@ -1,2 +1,2 @@
 # LearnJavaScript
-Learn JavaScript From EVS Institute Lahore
+Learn JavaScript From EVS
