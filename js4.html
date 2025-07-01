@@ -60,6 +60,47 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
+    function calculate() {
+      // get txtName, txtIncome, txtRent, txtBills and txtOthers controls
+      const eltName = document.getElementById("txtName");
+      const eltIncome = document.getElementById("txtIncome");
+      const eltRent = document.getElementById("txtRent");
+      const eltBills = document.getElementById("txtBills");
+      const eltOthers = document.getElementById("txtOthers");
+
+      // read name, income, rent, bills and others from controls
+      // convert income, rent, bills and others expenses to numbers
+      const n = eltName.value;  // read value from eltName
+      const i = Number(eltIncome.value);  // read value from eltIncome and convert to number
+      const r = Number(eltRent.value);
+      const b = Number(eltBills.value);
+      const o = Number(eltOthers.value);
+
+
+
+      // calculate saving in percentage of income
+      const s = i - (r + b + o); // calculate saving 
+      const p = s / i * 100; // calculate of saving percentage of income
+
+      // get element to show result 
+      const eltResult = document.getElementById("divResult");
+      // display message having name and saving in percentage in above element
+      eltResult.innerHTML = `${n} your saving is <strong>${p}% (${s} out of ${i})</strong> of your Income`;
+
+      // set value of txtName, txtIncome, txtRent, txtBills and other expernses to empty set
+      eltName.value = "";
+      eltIncome.value = "";
+      eltRent.value = "";
+      eltBills.value = "";
+      eltOthers.value = "";
+
+      // set focus to txtName
+      eltName.focus();
+
+
+    }
+
+
   </script>
 
 </body>
