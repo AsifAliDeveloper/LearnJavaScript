@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn JavaScript 17</title>
+  <!-- Bootstrap 5.3+ CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="card my-4">
+      <div class="card-header bg-primary text-white">
+        <strong><i class="fa fa-arrow-circle-right"></i> Array's Basics - Mini Project</strong>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Form Column -->
+          <div class="col-md-4 col-sm-12 mb-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <form onsubmit="event.preventDefault(); addStudent();">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtname" placeholder="Name" />
+                    <label for="txtname">Student's Name</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="number" class="form-control" min="0" max="100" id="txtmarks" placeholder="Marks" />
+                    <label for="txtmarks">Student's Marks</label>
+                  </div>
+                  <div class="mb-3 text-center">
+                    <button type="submit" class="btn btn-primary w-100">
+                      <i class="fa fa-plus"></i> Add
+                    </button>
+                  </div>
+                </form>
+                <p class="text-center mt-2">
+                  <strong>Total Students: <span id="studentCount">0</span></strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table Column -->
+          <div class="col">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped align-middle table-primary">
+                <thead class="bg-primary text-white">
+                  <tr>
+                    <th>Name</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                  <!-- Dynamic Rows Will Be Added Here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JavaScript -->
+  <script>
+    const names = [];
+    const marks = [];
+
+    function calculateGrade(mark) {
+      if (mark >= 90) return "A+";
+      else if (mark >= 80) return "A";
+      else if (mark >= 70) return "B";
+      else if (mark >= 60) return "C";
+      else if (mark >= 50) return "D";
+      else return "F";
+    }
+
+    function updateStudentCount() {
+      document.getElementById("studentCount").textContent = names.length;
+    }
+
+    function addStudent() {
+      const nameInput = document.getElementById("txtname");
+      const marksInput = document.getElementById("txtmarks");
+
+      const name = nameInput.value.trim();
+      const mark = parseInt(marksInput.value);
+
+      if (name === "" || isNaN(mark) || mark < 0 || mark > 100) {
+        alert("Please enter a valid name and marks (0–100).");
+        return;
+      }
+
+      names.push(name);
+      marks.push(mark);
+
+      const grade = calculateGrade(mark);
+
+      const tbody = document.getElementById("studentTableBody");
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${mark}</td>
+        <td>${grade}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="deleteStudent(this)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      `;
+
+      tbody.appendChild(row);
+
+      nameInput.value = "";
+      marksInput.value = "";
+      nameInput.focus();
+
+      updateStudentCount();
+    }
+
+    function deleteStudent(button) {
+      const row = button.closest("tr");
+      const index = row.rowIndex - 1; // minus 1 for header row
+      names.splice(index, 1);
+      marks.splice(index, 1);
+      row.remove();
+      updateStudentCount();
+    }
+  </script>
+</body>
+
+</html>

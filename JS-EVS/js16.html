@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn JavaScript 16</title>
+  <!-- Bootstrap 5.3+ CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row justify-content-center my-4">
+      <div class="col-md-6 col-sm-10">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fa fa-arrow-circle-right me-2"></i>Array Demo-Basic</strong>
+          </div>
+          <div class="card-body">
+            <button type="button" class="btn btn-primary" onclick="demo01()">
+              <i class="fa fa-arrow-circle-right"></i> Basics-1
+            </button>
+            <button type="button" class="btn btn-primary" onclick="demo02()">
+              <i class="fa fa-arrow-circle-right"></i> Basics-2
+            </button>
+            <button type="button" class="btn btn-primary" onclick="demo03()">
+              <i class="fa fa-arrow-circle-right"></i> Basics-3
+            </button>
+            <button type="button" class="btn btn-primary" onclick="demo04()">
+              <i class="fa fa-arrow-circle-right"></i> Slice
+            </button>
+            <button type="button" class="btn btn-primary" onclick="demo05()">
+              <i class="fa fa-arrow-circle-right"></i> Splice
+            </button>
+            <button type="button" class="btn btn-primary" onclick="demo06()">
+              <i class="fa fa-arrow-circle-right"></i> Demo 6
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    function demo01() {
+      let data = [10, 76, 67, 24, 58, 94];
+      // length 6
+      let l = data.length;
+      // first Index 0
+      // last index length-1 (5)
+      // get value from an array
+      // let x = data[5];
+      // let x = data.at(5);
+      // alert(x);
+      // replace value
+      // data[2] = 45;
+      // alert(data[2]);
+
+      // Iterate an array using simple for loop
+      // using simple for loop --> index
+      // for (let i = 0; i < data.length; i++) {
+      //   console.log(data[i]);
+      // }
+
+      // Iteration of an array using for of loop
+      // using for of loop --> without index
+      for (const d of data) {
+        console.log(d);
+      }
+    }
+
+    function demo02() {
+      const data = [10, 23, 50, 44];
+      data[1] = 99;  // we can change values in array defined using const keyword 
+      // append values in array / add value at the end of array
+      data.push(11); // we can append values in array defined using const keyword 
+      // even we can remove values in array defined using const keyword
+      // but we can't assign new array using const variable
+      // data = [77, 33, 44];
+      // data.pop(); // pop remove the values from array 
+      for (const d of data) {
+        console.log(d);
+      }
+    }
+
+    function demo03() {
+      const names = ["Asif", "Ali", "Abrar", "Imran"];
+      names[1] = "Usman";
+      names.push("Haseeb");
+      names.pop();
+      for (const n of names) {
+        console.log(n);
+      }
+    }
+
+    function demo04() {
+      let data = [10, 67, 23, 56, 39, 26];
+      console.log(`Original Array Before Slice ${data}`);
+      // first parameter is starting index - inclusive
+      // second parameter is ending index - exclusive
+      //it returns a new array having these value 
+      //without changing orignal array
+      const newArray = data.slice(2, 3);
+      console.log(`Original Array After Slice ${data}`);
+      console.log(`New Array After Slice ${newArray}`);
+    }
+
+    function demo05() {
+      let data = [10, 67, 23, 56, 39, 26];
+      console.log(`Original Array Before Splice ${data}`);
+      // first parameter is starting index - inclusive
+      // second parameter is number of items
+      //it returns a new array having these values 
+      //and these values are removed from the orignal array
+      const newArray = data.splice(2, 3);
+      console.log(`Original Array After Splice ${data}`);
+      console.log(`New Array After Splice ${newArray}`);
+    }
+
+    function demo06() {
+      const names = [];
+      const marks = [];
+      while (true) {
+        const n = prompt("Enter Student's Name: ");
+        if (n === "exit") break;
+        const m = +prompt("Enter Student's Marks: ");
+        names.push(n);
+        marks.push(m);
+      }
+
+      for (let i = 0; i < names.length; i++) {
+        console.log(`${names[i]} ${marks[i]}`);
+      }
+
+    }
+  </script>
+
+</body>
+
+</html>
