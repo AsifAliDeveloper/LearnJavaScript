@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Grading System</title>
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <style>
+    @media print {
+
+      button,
+      input {
+        display: none !important;
+      }
+
+      body {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="card my-4">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <strong><i class="fa fa-arrow-circle-right"></i> Student Grading System</strong>
+        <div>
+          <button class="btn btn-light btn-sm me-2" onclick="sortByName()">Sort by Name</button>
+          <button class="btn btn-light btn-sm me-2" onclick="sortByMarks()">Sort by Marks</button>
+          <button class="btn btn-dark btn-sm" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Form -->
+          <div class="col-md-4 col-sm-12 mb-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <form onsubmit="event.preventDefault(); addStudent();">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtname" placeholder="Name" />
+                    <label for="txtname">Student's Name</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="number" class="form-control" min="0" max="100" id="txtmarks" placeholder="Marks" />
+                    <label for="txtmarks">Student's Marks</label>
+                  </div>
+                  <div class="mb-3 text-center">
+                    <button type="submit" class="btn btn-primary w-100">
+                      <i class="fa fa-plus"></i> <span id="btnLabel">Add</span>
+                    </button>
+                  </div>
+                </form>
+                <p class="text-center"><strong>Total Students: <span id="studentCount">0</span></strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="col">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped align-middle">
+                <thead class="bg-primary text-white">
+                  <tr>
+                    <th>Name</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                  <!-- Students will appear here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+    const names = [];
+    const marks = [];
+    let editIndex = -1;
+
+    function calculateGrade(mark) {
+      if (mark >= 90) return "A+";
+      else if (mark >= 80) return "A";
+      else if (mark >= 70) return "B";
+      else if (mark >= 60) return "C";
+      else if (mark >= 50) return "D";
+      else return "F";
+    }
+
+    function updateStudentCount() {
+      document.getElementById("studentCount").textContent = names.length;
+    }
+
+    function saveToLocalStorage() {
+      localStorage.setItem("students", JSON.stringify({ names, marks }));
+    }
+
+    function loadFromLocalStorage() {
+      const saved = localStorage.getItem("students");
+      if (saved) {
+        const { names: savedNames, marks: savedMarks } = JSON.parse(saved);
+        names.push(...savedNames);
+        marks.push(...savedMarks);
+        renderTable();
+      }
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("studentTableBody");
+      tbody.innerHTML = "";
+      names.forEach((name, index) => {
+        const mark = marks[index];
+        const grade = calculateGrade(mark);
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${name}</td>
+          <td>${mark}</td>
+          <td>${grade}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-1" onclick="editStudent(${index})">
+              <i class="fa fa-pen"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="deleteStudent(${index})">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+      updateStudentCount();
+      document.getElementById("btnLabel").textContent = "Add";
+    }
+
+    function addStudent() {
+      const nameInput = document.getElementById("txtname");
+      const marksInput = document.getElementById("txtmarks");
+
+      const name = nameInput.value.trim();
+      const mark = parseInt(marksInput.value);
+
+      if (name === "" || isNaN(mark) || mark < 0 || mark > 100) {
+        alert("Please enter a valid name and marks (0–100).");
+        return;
+      }
+
+      if (editIndex === -1) {
+        names.push(name);
+        marks.push(mark);
+      } else {
+        names[editIndex] = name;
+        marks[editIndex] = mark;
+        editIndex = -1;
+      }
+
+      nameInput.value = "";
+      marksInput.value = "";
+      nameInput.focus();
+
+      saveToLocalStorage();
+      renderTable();
+    }
+
+    function deleteStudent(index) {
+      names.splice(index, 1);
+      marks.splice(index, 1);
+      saveToLocalStorage();
+      renderTable();
+    }
+
+    function editStudent(index) {
+      document.getElementById("txtname").value = names[index];
+      document.getElementById("txtmarks").value = marks[index];
+      editIndex = index;
+      document.getElementById("btnLabel").textContent = "Update";
+    }
+
+    function sortByName() {
+      const combined = names.map((name, i) => ({ name, mark: marks[i] }));
+      combined.sort((a, b) => a.name.localeCompare(b.name));
+      updateArrays(combined);
+    }
+
+    function sortByMarks() {
+      const combined = names.map((name, i) => ({ name, mark: marks[i] }));
+      combined.sort((a, b) => b.mark - a.mark);
+      updateArrays(combined);
+    }
+
+    function updateArrays(arr) {
+      names.length = 0;
+      marks.length = 0;
+      arr.forEach(({ name, mark }) => {
+        names.push(name);
+        marks.push(mark);
+      });
+      saveToLocalStorage();
+      renderTable();
+    }
+
+    // Load saved data on page load
+    window.onload = loadFromLocalStorage;
+  </script>
+</body>
+
+</html>
