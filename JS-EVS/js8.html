@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
   <div class="container-fluid">
     <div class="row justify-content-center my-3">
       <div class="col-6">
@@ -19,6 +20,26 @@
           <div class="card-body">
             <div class="card-header bg-primary text-white">
               <strong><i class="fa fa-calculator"></i> Investemt calculator </strong>
+            </div>
+            <div class="card-body">
+              <form action="#">
+                <div class="form-floating mb-3">
+                  <input type="number" class="form-control" id="txtPrincipal" min="0" step="50000" placeholder="" />
+                  <label for="txtPrincipal">Investment Amount</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="number" class="form-control" id="txtDuration" min="0" step="1" max="10" placeholder="" />
+                  <label for="txtDuration">Investment Duration in Years</label>
+                </div>
+                <div class="mb-3">
+                  <button type="button" class="btn btn-primary" onclick="calculate()">
+                    <i class="fa fa-circle-right"></i> Calculate
+                  </button>
+                </div>
+                <div id="divResult" class="alert alert-primary mb-3">
+                  Result here
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -29,6 +50,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+
+      function calculate() {
+
+        const eltPrincipal = document.getElementById("txtPrincipal");
+        const eltDuration = document.getElementById("txtDuration");
+        const eltResult = document.getElementById("divResult");
+        const p = Number(eltPrincipal.value);
+        const d = Number(eltDuration.value);
+        const i = 10 / 100;
+        if (p >= 100000 && d >= 1 && d <= 10) {
+          const a = Math.floor(p * Math.pow(1 + i, d));
+          eltResult.innerHTML = `<div> Investment Amount <strong>${p}</strong></div>`;
+          eltResult.innerHTML += `<div> Investment Duration <strong>${d}</strong></div>`;
+          eltResult.innerHTML += `<div> Profit of Investment <strong>${a - p}</strong></div>`;
+          eltResult.innerHTML += `<div> Final Amount <strong>${a}</strong></div>`;
+        }
+        else {
+          eltResult.innerHTML = `<div> Invalid input, try again </div>`;
+        }
+        eltPrincipal.value = "";
+        eltDuration.value = "";
+        eltPrincipal.focus();
+
+      }
 
     </script>
 </body>
