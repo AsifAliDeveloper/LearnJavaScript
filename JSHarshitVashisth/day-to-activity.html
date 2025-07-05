@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Day-to-Activity Planner</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-sm-10">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fa fa-calendar"></i> Day-to-Activity Planner</strong>
+          </div>
+          <div class="card-body">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="dayInput" min="0" max="6" placeholder="Enter day number">
+              <label for="dayInput">Enter Day Number (0 = Sunday, 6 = Saturday)</label>
+            </div>
+            <button class="btn btn-primary w-100" onclick="showActivity()">Show Activity</button>
+            <div class="alert mt-3 d-none text-center" id="resultBox"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function showActivity() {
+      const day = parseInt(document.getElementById("dayInput").value);
+      const resultBox = document.getElementById("resultBox");
+      let message = "";
+
+      switch(day) {
+        case 0:
+          message = "📖 Sunday: Rest, Read a Book, and Recharge!";
+          break;
+        case 1:
+          message = "💼 Monday: Back to work! Stay productive.";
+          break;
+        case 2:
+          message = "🧑‍💻 Tuesday: Focus on learning something new!";
+          break;
+        case 3:
+          message = "🏃‍♂️ Wednesday: Midweek workout & goals check.";
+          break;
+        case 4:
+          message = "📝 Thursday: Finish tasks and prepare reports.";
+          break;
+        case 5:
+          message = "🎬 Friday: Wrap up work and enjoy a movie night.";
+          break;
+        case 6:
+          message = "🌳 Saturday: Outdoor activities or family time!";
+          break;
+        default:
+          message = "❌ Invalid day! Please enter a number between 0 and 6.";
+      }
+
+      resultBox.textContent = message;
+      resultBox.className = "alert mt-3 text-center";
+      resultBox.classList.add(day >= 0 && day <= 6 ? "alert-success" : "alert-danger");
+    }
+  </script>
+
+</body>
+</html>
