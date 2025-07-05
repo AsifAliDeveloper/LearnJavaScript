@@ -1,4 +1,4 @@
-// 🔤  template String :
+//? 🔤  template String :
 
 let age = 22;
 let name = "Asif Ali";
@@ -11,7 +11,7 @@ let aboutMe = `My name is ${name} and my age is ${age}`;
 console.log(aboutMe);  // Output: My name is Asif Ali and my age is 22
 
 
-// ✅ Why Template Strings Are Great:
+//? ✅ Why Template Strings Are Great:
 
 // No need to manually add spaces (+ " ").
 // Easy to insert variables using ${}.

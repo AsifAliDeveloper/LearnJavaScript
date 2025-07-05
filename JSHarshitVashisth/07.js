@@ -1,4 +1,4 @@
-// ✅ 1. .trim()
+//? ✅ 1. .trim()
 
 let firstName = "   Asif Ali     ";
 console.log(firstName.length);           // Output: 16
@@ -10,7 +10,7 @@ console.log(newString.length);           // Output: 8
 // ⚠️ It does not change the original string—it's immutable and returns a new string.
 
 
-// ✅ 2. .toUpperCase() & .toLowerCase()
+//? ✅ 2. .toUpperCase() & .toLowerCase()
 
 let myName = "Asif Ali";
 let upString =  myName.toUpperCase();
@@ -26,7 +26,7 @@ console.log(lowString);                 // Output: "asif ali"
 // Like .trim(), both return new strings.
 
 
-// ✅ 3. .slice(start, end)
+//? ✅ 3. .slice(start, end)
 
 let myString = myName.slice(4);
 console.log(myString);                   // Output: " Ali"
@@ -44,7 +44,7 @@ myName.slice(1, 4);   // "sif"
 myName.slice(4);      // " Ali"
 
 
-// 🔁 Summary Table
+//* 🔁 Summary Table
 // Method	Description	Example	Output
 // .trim()	Removes extra spaces (start & end)	" Asif ".trim()	"Asif"
 // .toUpperCase()	Converts to uppercase	"Asif".toUpperCase()	"ASIF"
@@ -52,7 +52,7 @@ myName.slice(4);      // " Ali"
 // .slice(a, b)	Extracts part of string (a to b-1)	"Asif Ali".slice(0,4)	"Asif"
 
 
-// ✅ 4. .replace()
+//? ✅ 4. .replace()
 
 // Replaces part of a string with something else.
 
@@ -62,7 +62,7 @@ console.log(replaced); // Output: "Hello World!"
 
 // Only replaces the first match.
 
-// ✅ Case-sensitive.
+//* ✅ Case-sensitive.
 
 // Bonus – For all matches, use regex with g flag:
 
@@ -70,7 +70,7 @@ let str = "apple apple";
 console.log(str.replace(/apple/g, "banana")); // banana banana
 
 
-// ✅ 5. .includes()
+//? ✅ 5. .includes()
 
 // Checks if a substring exists inside a string.
 
@@ -80,10 +80,10 @@ console.log(sentence.includes("Python")); // false
 
 // Returns true or false
 
-// ✅ Case-sensitive
+//* ✅ Case-sensitive
 
 
-// ✅ 6. .indexOf()
+//? ✅ 6. .indexOf()
 
 // Returns the first index of a substring. If not found, returns -1.
 
@@ -95,7 +95,7 @@ console.log(name.indexOf("Z"));   // -1
 // Use it to find where a word starts in a string.
 
 
-// ✅ 7. .split()
+//? ✅ 7. .split()
 
 // Splits a string into an array based on a delimiter.
 
@@ -108,7 +108,7 @@ console.log(parts); // ["Asif", "Ali", "Developer"]
 "ASIF".split("") // ["A", "S", "I", "F"]
 
 
-// 📋 Summary Table
+//* 📋 Summary Table
 // Method	Description	Example	Output
 // .replace()	Replace part of string	"Hi JS".replace("JS", "HTML")	"Hi HTML"
 // .includes()	Check if string contains a value	"Hello".includes("lo")	true

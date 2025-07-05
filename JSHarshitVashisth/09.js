@@ -1,4 +1,4 @@
-// ✅ 1. String Concatenation
+//? ✅ 1. String Concatenation
 
 let string1 = "Asif";
 let string2 = "Ali";
@@ -6,14 +6,14 @@ let string2 = "Ali";
 // Method 1: Using `+` operator
 // let newString = string1 + " " + string2;
 
-// Method 2: Using template literals 
+//* Method 2: Using template literals 
 let newString = `${string1} ${string2}`;
 console.log(newString);  // Output: "Asif Ali"
 
 // 🧠 Template literals (${}) make code cleaner and easier to read.
 
 
-// ✅ 2. Number Addition
+//? ✅ 2. Number Addition
 
 let num1 = 7;
 let num2 = 10;
@@ -24,7 +24,7 @@ console.log(newNum);  // Output: 17
 console.log(`${num1} + ${num2} = ${newNum}`);  // "7 + 10 = 17"
 
 
-// ✅ 3. String to Number Conversion Before Addition
+//? ✅ 3. String to Number Conversion Before Addition
 
 let n1 = "7";
 let n2 = "80";
@@ -32,7 +32,7 @@ let n2 = "80";
 // Without conversion: "780" (string concatenation)
 // let Num = n1 + n2;
 
-// With `+` before each: number conversion
+//* With `+` before each: number conversion
 let Num = +n1 + +n2;
 console.log(Num);             // Output: 87
 console.log(typeof Num);      // Output: "number"
@@ -48,7 +48,7 @@ console.log(typeof Num);      // Output: "number"
 // + "7" + + "80"	87	Converts both to numbers, adds
 
 
-// ✅ parseInt()
+//? ✅ parseInt()
 
 // Parses a string and returns an integer (whole number).
 
@@ -60,7 +60,7 @@ console.log(parseInt("42px"));      // 42   → stops at 'p'
 console.log(parseInt("px42"));      // NaN  → doesn't start with a number
 
 
-// ✅ parseFloat()
+//? ✅ parseFloat()
 
 // Parses a string and returns a floating-point number (includes decimals).
 
@@ -79,12 +79,12 @@ console.log(parseFloat("px42.85")); // NaN
 // parseInt("px50")	NaN	number
 
 
-// ✅ Bonus: Number() vs parseInt()
+//? ✅ Bonus: Number() vs parseInt()
 
 Number("42.85")      // 42.85
 parseInt("42.85")    // 42
 // So:
 
-// ✅ Use Number() if you want strict number conversion.
+//* ✅ Use Number() if you want strict number conversion.
 
-// ✅ Use parseInt() or parseFloat() if you're extracting numbers from mixed strings (like "150px" or "12.5kg").
+//* ✅ Use parseInt() or parseFloat() if you're extracting numbers from mixed strings (like "150px" or "12.5kg").

@@ -1,6 +1,6 @@
-// 🔑 let Keyword in JavaScript
+//* 🔑 let Keyword in JavaScript
 
-// ✅ Example:
+//* ✅ Example:
 
 let x = 10;      // Declare and assign
 console.log(x);  // Output: 10
@@ -8,28 +8,28 @@ console.log(x);  // Output: 10
 x = 15;          // Re-assign is allowed
 console.log(x);  // Output: 15
 
-// 🟩 Key Features of let
+//? 🟩 Key Features of let
 
-// 1. ✅ Block Scoped
+//* 1. ✅ Block Scoped
 // A let variable exists only inside the block { } where it's defined.
 
 {
   let a = 5;
-  console.log(a); // ✅ 5
+  console.log(a); //* ✅ 5
 }
-// console.log(a);   // ❌ ReferenceError: a is not defined
+// console.log(a);   //! ❌ ReferenceError: a is not defined
 
 
-// 2. ✅ Can be Updated
+//? 2. ✅ Can be Updated
 
 let age = 25;
-age = 26; // ✅ allowed
+age = 26; //* ✅ allowed
 
 
-// 3. ❌ Cannot be Re-declared in Same Scope
+//! 3. ❌ Cannot be Re-declared in Same Scope
 
 // let age = 30;
-// let age = 40; ❌ SyntaxError: Identifier 'age' has already been declared
+//! let age = 40; ❌ SyntaxError: Identifier 'age' has already been declared
 
 
 // 🔁 Comparison: var vs let
@@ -47,7 +47,7 @@ function testVarLet() {
     let b = 2;
   }
 
-  console.log(a); // ✅ 1
-  // console.log(b); // ❌ ReferenceError
+  console.log(a); //* ✅ 1
+  // console.log(b); //! ❌ ReferenceError
 }
 testVarLet();
