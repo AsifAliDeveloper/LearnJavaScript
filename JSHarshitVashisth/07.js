@@ -108,7 +108,7 @@ console.log(parts); // ["Asif", "Ali", "Developer"]
 "ASIF".split("") // ["A", "S", "I", "F"]
 
 
-// 🔁 Summary Table
+// 📋 Summary Table
 // Method	Description	Example	Output
 // .replace()	Replace part of string	"Hi JS".replace("JS", "HTML")	"Hi HTML"
 // .includes()	Check if string contains a value	"Hello".includes("lo")	true

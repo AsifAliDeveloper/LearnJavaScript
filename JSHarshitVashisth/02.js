@@ -109,7 +109,7 @@ y = 60;  //  ❌ Error: Cannot reassign a constant variable
 // ✅ Best for values that should never change.
 
 
-// 🔁 Summary Table
+// 📋 Summary Table
 // Keyword	Reassignable	Redeclarable	Scope	Use Case
 // var	✅ Yes	✅ Yes	Function	❌ Avoid in modern JS
 // let	✅ Yes	❌ No	Block	✅ Use when value may change

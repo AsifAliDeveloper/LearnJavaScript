@@ -30,7 +30,7 @@ console.log(firstName[firstName.length - 1]); // Output: "I"
 // console.log(firstName[firstName.length - 2]); // Output: "L"
 // Second last character → index 5 = "L"
 
-// 🔁 Summary
+// 📋 Summary
 // Expression	Output	Meaning
 // firstName[0]	 A	First character
 // firstName[2]	 I	3rd character
