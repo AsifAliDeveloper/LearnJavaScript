@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn JavaScript 06</title>
+  <title>Learn JavaScript 06 - Investment Calculator</title>
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
@@ -12,34 +12,35 @@
 </head>
 
 <body>
-
   <div class="container-fluid">
     <div class="row justify-content-center my-4">
       <div class="col-md-6 col-sm-10">
         <div class="card shadow">
           <div class="card-header bg-primary text-white">
-            <strong><i class="fa fa-arrow-circle-right me-2"></i> Investment Calculator</strong>
+            <strong><i class="fa fa-calculator me-2"></i> Investment Calculator</strong>
           </div>
           <div class="card-body">
-            <form action="#">
+            <form onsubmit="event.preventDefault(); calculate();">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="txtname" placeholder="Investor Name" />
                 <label for="txtname">Investor Name</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtprincipal" placeholder="Investor Amount" />
-                <label for="txtprincipal">Investor Amount</label>
+                <input type="number" class="form-control" id="txtprincipal" placeholder="Investor Amount" step="50000"
+                  min="0" />
+                <label for="txtprincipal">Investor Amount (Min: 100,000)</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtduration" placeholder="Investment Duration" />
-                <label for="txtduration">Investment Duration in Years</label>
+                <input type="number" class="form-control" id="txtduration" placeholder="Investment Duration" min="1"
+                  max="10" />
+                <label for="txtduration">Investment Duration (1–10 Years)</label>
               </div>
               <div class="mb-3">
-                <button type="button" class="btn btn-primary" onclick="calculate()">
-                  <i class="fa fa-arrow-circle-right me-1"></i> Calculate
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fa fa-arrow-circle-right me-2"></i> Calculate
                 </button>
               </div>
-              <div id="divResult" class="alert alert-primary mb-3">
+              <div id="divResult" class="alert alert-info text-center fw-bold">
                 Result here
               </div>
             </form>
@@ -53,40 +54,42 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-
     function calculate() {
       const eltName = document.getElementById("txtname");
       const eltPrincipal = document.getElementById("txtprincipal");
       const eltDuration = document.getElementById("txtduration");
       const eltResult = document.getElementById("divResult");
 
-      const name = eltName.value;
+      const name = eltName.value.trim();
       const principal = Number(eltPrincipal.value);
       const duration = Number(eltDuration.value);
       const rate = 10 / 100;
 
-      if (!name || !principal || !duration) {
-        eltResult.innerHTML = `<div class="text-danger">Please fill all fields correctly.</div>`;
+      if (!name || principal < 100000 || duration < 1 || duration > 10) {
+        eltResult.className = "alert alert-warning text-center fw-bold";
+        eltResult.innerHTML = `❌ Please enter a valid name, amount ≥ 100,000, and duration between 1–10 years.`;
         return;
       }
 
       const amount = Math.floor(principal * Math.pow(1 + rate, duration));
       const profit = amount - principal;
 
+      eltResult.className = "alert alert-success text-center fw-bold";
       eltResult.innerHTML = `
-        <div>Investor Name: <strong>${name}</strong></div>
-        <div>Investment Amount: <strong>${principal}</strong></div>
-        <div>Investment Duration: <strong>${duration} Years</strong></div>
-        <div>Profit of Investment: <strong>${profit}</strong></div>
-        <div>Final Amount: <strong>${amount}</strong></div>
+        <div>👤 Investor: <strong>${name}</strong></div>
+        <div>💰 Principal: <strong>PKR ${principal.toLocaleString()}</strong></div>
+        <div>📆 Duration: <strong>${duration} year(s)</strong></div>
+        <div>📈 Profit: <strong>PKR ${profit.toLocaleString()}</strong></div>
+        <div>🏦 Final Amount: <strong>PKR ${amount.toLocaleString()}</strong></div>
       `;
 
+      // Reset inputs
+      eltName.value = "";
       eltPrincipal.value = "";
       eltDuration.value = "";
-      eltPrincipal.focus();
+      eltName.focus();
     }
   </script>
-
 </body>
 
 </html>

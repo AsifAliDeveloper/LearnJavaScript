@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>learn JavaScript 05</title>
+  <title>Learn JavaScript 05 - Math Object</title>
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
@@ -18,13 +18,16 @@
       <div class="col-md-6 col-sm-10">
         <div class="card shadow">
           <div class="card-header bg-primary text-white">
-            <strong><i class="fa fa-arrow-circle-right me-2"></i> Math Object </strong>
+            <strong><i class="fa fa-arrow-circle-right me-2"></i> Math Object Demos</strong>
           </div>
           <div class="card-body">
             <div class="mb-3">
               <button type="button" class="btn btn-primary me-2" onclick="demo1()">Demo-1</button>
-              <button type="button" class="btn btn-primary" onclick="demo2()">Demo-2</button>
+              <button type="button" class="btn btn-primary me-2" onclick="demo2()">Demo-2</button>
               <button type="button" class="btn btn-primary" onclick="demo3()">Demo-3</button>
+            </div>
+            <div id="divResult" class="alert alert-info text-center fw-bold">
+              Result will be shown in alert popup.
             </div>
           </div>
         </div>
@@ -36,88 +39,35 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    
     function demo1() {
-      // const a = Math.abs(-6);  // return Absolute Value
-      // console.log(a);
-      // console.log("===========================");
-      // const b = Math.ceil(5.1);  // rounds up to nearest interger 
-      // console.log(b);
-      // console.log("===========================");
-      // const c = Math.ceil(5.9);  // rounds up to nearest interger
-      // console.log(c);
-      // console.log("===========================");
-      // const d = Math.floor(5.1);  // rounds down to nearest interger
-      // console.log(d);
-      // console.log("===========================");
-      // const e = Math.floor(5.9);   // rounds down to nearest interger
-      // console.log(e);
-      // console.log("===========================");
-      // const f = Math.round(5.1);      // rounds to the nearest interger
-      // console.log(f);
-      // console.log("===========================");
-      // const g = Math.round(5.9);     // rounds to the nearest interger
-      // console.log(g);
-      // console.log("===========================");
-      // const k = Math.trunc(6.9);  // Remove decimal part
-      // console.log(k);
-      // console.log("===========================");
-      // const l = Math.max(45, 52, 13);   // Return the largest number
-      // console.log(l);
-      // console.log("===========================");
-      // const m = Math.min(45, 52, 13);   // Return the smallest number
-      // console.log(m);
-      // console.log("===========================");
-      // const n = Math.pow(5, 7.35);  // Returns 5 power of 7.35
-      // console.log(n);
-      // console.log("===========================");
-      // const o = Math.sqrt(12345722);    // Return Square root
-      // console.log(o);
-      // console.log("===========================");
-      // const p = Math.random();      // return a rendom number between 0 and 1
-      // console.log(p);
-      // console.log("===========================");
-      // const q = Math.PI;      // Return PI value
-      // console.log(q);
-      // console.log("===========================");
-      // const r = Math.E;   // Retuen Euler's value
-      // console.log(r);
-      // console.log("===========================");
-      // const s = Math.round(Math.random());
-      // console.log(s);
-      // console.log("===========================");
-      // const t = Math.round(Math.random() * 200);
-      // console.log(t);
-      // console.log("===========================");
-      // // Random integer between 1 and 100
-      // const rand = Math.floor(Math.random() * 100) + 1;
-      // console.log(rand);
-      // console.log("===========================");
-
-      const r = +prompt("Enter radious of circle: ");
-      const a = Math.round(Math.PI * Math.pow(r, 2));
-      const c = Math.round(2 * Math.PI * r);
-      alert(`area: ${a}, circumference: ${c}`);
+      const r = +prompt("Enter radius of circle:");
+      if (!r || r <= 0) {
+        alert("❌ Please enter a valid positive number for radius.");
+        return;
+      }
+      const area = Math.round(Math.PI * Math.pow(r, 2));
+      const circumference = Math.round(2 * Math.PI * r);
+      alert(`✅ For radius ${r}:\n\n🟢 Area = ${area}\n🔵 Circumference = ${circumference}`);
     }
 
     function demo2() {
-      const p = +prompt("Enter investment Amount: ");
-      const n = +prompt("Enter investment Duration (Years)");
-      const i = 10 / 100; // intrest rate 
-      const a = p * Math.pow(1 + i, n);
-      alert(`Your investemt of ${p} will become ${a} after ${n} years`);
+      const p = +prompt("Enter investment amount:");
+      const n = +prompt("Enter investment duration in years:");
+      const i = 10 / 100;
+      if (!p || !n || p <= 0 || n <= 0) {
+        alert("❌ Invalid input. Please enter positive numbers.");
+        return;
+      }
+      const a = Math.round(p * Math.pow(1 + i, n));
+      alert(`📈 Your investment of PKR ${p.toLocaleString()} will grow to PKR ${a.toLocaleString()} in ${n} years.`);
     }
 
     function demo3() {
-      // const r = Math.random();
-      // Math.round(Math.random() * (max - min)) + min;
+      const min = 20;
       const max = 100;
-      const mim = 20;
-
-      const r = Math.round(Math.random() * 80) + 20;
-      alert(r);
+      const random = Math.round(Math.random() * (max - min)) + min;
+      alert(`🎲 Random number between ${min} and ${max}: ${random}`);
     }
-
   </script>
 
 </body>

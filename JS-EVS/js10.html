@@ -4,116 +4,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>learn JavaScript 10</title>
+  <title>Learn JavaScript 10 - For Loop</title>
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
+  <!-- Font Awesome 6.5.1 -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
 
   <div class="container-fluid">
-    <div class="row justify-content-center my-3">
-      <div class="col-6">
-        <div class="card">
+    <div class="row justify-content-center my-4">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fas fa-code me-2"></i> For Loop Examples</strong>
+          </div>
           <div class="card-body">
-            <div class="card-header bg-primary text-white">
-              <strong><i class="fa fa-calculator"></i> For Loop </strong>
+
+            <div class="mb-3">
+              <button class="btn btn-primary w-100 mb-2" onclick="demo01()"><i class="fas fa-user me-2"></i> Demo01 -
+                Name x5</button>
+              <button class="btn btn-primary w-100 mb-2" onclick="demo02()"><i class="fas fa-sort-numeric-up me-2"></i>
+                Demo02 - 1 to 10</button>
+              <button class="btn btn-primary w-100 mb-2" onclick="demo03()"><i
+                  class="fas fa-sort-numeric-down me-2"></i> Demo03 - 10 to 1</button>
+              <button class="btn btn-primary w-100 mb-2" onclick="demo04()"><i class="fas fa-equals me-2"></i> Demo04 -
+                Even Numbers</button>
+              <button class="btn btn-primary w-100 mb-2" onclick="demo05()"><i class="fas fa-grip-lines me-2"></i>
+                Demo05 - Odd Numbers</button>
+              <button class="btn btn-primary w-100 mb-2" onclick="demo06()"><i class="fas fa-dice me-2"></i> Demo06 -
+                Random Dice</button>
+              <button class="btn btn-primary w-100 mb-2" onclick="demo07()"><i class="fas fa-check-circle me-2"></i>
+                Demo07 - Prime Checker</button>
+              <button class="btn btn-danger w-100 mb-2" onclick="clearOutput()"><i class="fas fa-trash me-2"></i> Clear
+                Output</button>
             </div>
-            <div class="card-body">
-              <div class="mb-3">
-                <button type="button" class="btn btn-primary mb-2" onclick="demo01()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo01
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="demo02()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo02
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="demo03()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo03
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="demo04()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo04
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="demo05()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo05
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="demo06()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo06
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="demo07()"><i
-                    class="fa fa-arrow-circle-right"></i> Demo07
-                </button>
-              </div>
-            </div>
+
+            <div id="output" class="bg-light p-3 border rounded text-monospace" style="min-height: 150px;"></div>
+
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+  <!-- JavaScript Logic -->
+  <script>
+    const output = document.getElementById("output");
 
-      const demo01 = () => {
-        const name = prompt("Enter Your name: ");
-        for (let i = 1; i <= 5; i++) {
-          console.log(`${i} - ${name}`);
+    const demo01 = () => {
+      output.innerHTML = "";
+      const name = prompt("Enter your name:");
+      for (let i = 1; i <= 5; i++) {
+        output.innerHTML += `${i} - ${name}<br>`;
+      }
+    }
+
+    const demo02 = () => {
+      output.innerHTML = "";
+      for (let i = 1; i <= 10; i++) {
+        output.innerHTML += `${i}<br>`;
+      }
+    }
+
+    const demo03 = () => {
+      output.innerHTML = "";
+      for (let i = 10; i >= 1; i--) {
+        output.innerHTML += `${i}<br>`;
+      }
+    }
+
+    const demo04 = () => {
+      output.innerHTML = "";
+      for (let i = 2; i <= 10; i += 2) {
+        output.innerHTML += `${i}<br>`;
+      }
+    }
+
+    const demo05 = () => {
+      output.innerHTML = "";
+      for (let i = 1; i <= 9; i += 2) {
+        output.innerHTML += `${i}<br>`;
+      }
+    }
+
+    const demo06 = () => {
+      output.innerHTML = "";
+      for (let i = 1; i <= 10; i++) {
+        const r = Math.floor(Math.random() * 6) + 1;
+        if (r === 6) continue;
+        output.innerHTML += `${i} - 🎲 ${r}<br>`;
+      }
+      output.innerHTML += `<hr>Skipped 6s`;
+    }
+
+    const demo07 = () => {
+      output.innerHTML = "";
+      const n = +prompt("Enter a number [2 to 100000]:");
+
+      if (isNaN(n) || n < 2 || n > 100000) {
+        alert("Please enter a valid number between 2 and 100000.");
+        return;
+      }
+
+      let isPrime = true;
+      const end = Math.floor(Math.sqrt(n));
+      for (let i = 2; i <= end; i++) {
+        if (n % i === 0) {
+          isPrime = false;
+          break;
         }
       }
 
-      const demo02 = () => {
-        for (let i = 1; i <= 10; i++) {
-          console.log(i);
-        }
-      }
+      const result = isPrime
+        ? `<span class="text-success fw-bold">${n} is a Prime Number ✅</span>`
+        : `<span class="text-danger fw-bold">${n} is Not a Prime Number ❌</span>`;
 
-      const demo03 = () => {
-        for (let i = 10; i >= 1; i--) {
-          console.log(i);
-        }
-      }
+      output.innerHTML = result;
+    }
 
-      const demo04 = () => {
-        for (let i = 2; i <= 10; i += 2) {
-          console.log(i);
-        }
-      }
+    const clearOutput = () => {
+      output.innerHTML = "";
+    }
+  </script>
 
-      const demo05 = () => {
-        for (let i = 1; i <= 9; i += 2) {
-          console.log(i);
-        }
-      }
-
-      //write a function to generate 10 randomg number between 1 to 6
-      const demo06 = () => {
-        for (let i = 1; i <= 10; i++) {
-          const r = Math.round(Math.random() * 5) + 1;
-          // if (r === 6)
-          //   break; // terminates the loop, rest of the iterations will not be executed
-          if (r === 6)
-            continue; // skips current iteration; rest of the iterations will be executed
-          console.log(`${i} ${r}`);
-        }
-        console.log("-----------");
-      }
-
-      const demo07 = () => {
-        const n = +prompt("Enter a Number [2......100000]");
-        let msg = `${n} is a prime number`;
-        const end = Math.floor(Math.sqrt(n));
-        for (let i = 2; i <= end; i++) {
-          if (n % i === 0) {
-            msg = `${n} is not a prime number`;
-            break;
-          }
-        }
-        alert(msg);
-      }
-
-    </script>
 </body>
 
 </html>

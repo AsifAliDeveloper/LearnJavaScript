@@ -4,123 +4,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>learn JavaScript 09</title>
+  <title>Learn JavaScript 09 - Grade Calculator</title>
+
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
+  <!-- Font Awesome 6.5.1 -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
 
   <div class="container-fluid">
-    <div class="row justify-content-center my-3">
-      <div class="col-6">
-        <div class="card">
+    <div class="row justify-content-center my-4">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fas fa-calculator me-2"></i> Grade Calculator</strong>
+          </div>
           <div class="card-body">
-            <div class="card-header bg-primary text-white">
-              <strong><i class="fa fa-calculator"></i> Grade calculator </strong>
-            </div>
-            <div class="card-body">
-              <form action="#">
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="txtName" placeholder="" />
-                  <label for="txtName">Student's Name</label>
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="number" class="form-control" id="txtMarks" min="0" step="1" max="100" placeholder="" />
-                  <label for="txtMarks">Student's Marks</label>
-                </div>
-                <div class="mb-3">
-                  <button type="button" class="btn btn-primary" onclick="calculate()">
-                    <i class="fa fa-circle-right"></i> Calculate
-                  </button>
-                </div>
-                <div id="divResult" class="alert alert-primary mb-3">
-                  Result here
-                </div>
-              </form>
-            </div>
+            <form onsubmit="event.preventDefault(); calculate();">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="txtName" placeholder="Student Name"
+                  oninput="clearResult()" />
+                <label for="txtName">Student's Name</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="txtMarks" placeholder="Marks (0-100)" min="0" max="100"
+                  oninput="clearResult()" />
+                <label for="txtMarks">Student's Marks</label>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fas fa-arrow-circle-right me-2"></i> Calculate
+                </button>
+              </div>
+              <div id="divResult" class="alert alert-info text-center fw-bold">
+                Result here
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+  <!-- JavaScript -->
+  <script>
+    const eltName = document.getElementById("txtName");
+    const eltMarks = document.getElementById("txtMarks");
+    const eltResult = document.getElementById("divResult");
 
-      function calculate() {
-        
-        // get controls
-        const eltName = document.getElementById("txtName");
-        const eltMarks = document.getElementById("txtMarks");
-        const eltResult = document.getElementById("divResult");
-        // read data from controls and convert in number if need
-        const name = eltName.value;
-        const marks = Number(eltMarks.value);
+    function calculate() {
+      const name = eltName.value.trim();
+      const marks = Number(eltMarks.value);
 
-        // using compound condition 
-        // let grade = "F";
-        // if (marks >= 90) {
-        //   grade = "A";
-        // }
-        // if (marks >= 80 && marks < 90) {
-        //   grade = "B";
-        // }
-        // if (marks >= 70 && marks < 80) {
-        //   grade = "C";
-        // }
-        // if (marks >= 60 && marks < 70) {
-        //   grade = "D";
-        // }
+      let grade = "F";
+      let alertClass = "alert-danger";
 
-        // Using Nested if
-        // if (marks >= 1 && marks <= 100) {
-        //   let grade = "F";
-        //   if (marks >= 90) {
-        //     grade = "A";
-        //   }
-        //   else {
-        //     if (marks >= 80) {
-        //       grade = "B";
-        //     }
-        //     else {
-        //       if (marks >= 70) {
-        //         grade = "C";
-        //       }
-        //       else {
-        //         if (marks >= 60) {
-        //           grade = "D";
-        //         }
-        //       }
-        //     }
-        //   }
-        //   eltResult.innerHTML = `<div>${name} your grade is <strong>${grade}</strong></div>`;
-        // }
-
-        // using else if 
-        if (name && marks >= 1 && marks <= 100) {
-          let grade = "F";
-          if (marks >= 90) {
-            grade = "A";
-          } else if (marks >= 80) {
-            grade = "B";
-          } else if (marks >= 70) {
-            grade = "C";
-          } else if (marks >= 60) {
-            grade = "D";
-          }
-          eltResult.innerHTML = `<div>${name} your grade is <strong>${grade}</strong></div>`;
-        }
-        else {
-          eltResult.innerHTML = `<div><strong>Invalid Input</strong>, try again</div>`;
-        }
-
+      if (!name || isNaN(marks) || marks < 0 || marks > 100) {
+        eltResult.className = "alert alert-warning text-center fw-bold";
+        eltResult.innerHTML = "❌ Please enter a valid name and marks between 0 and 100.";
+        return;
       }
 
-    </script>
+      if (marks >= 90) {
+        grade = "A";
+        alertClass = "alert-success";
+      } else if (marks >= 80) {
+        grade = "B";
+        alertClass = "alert-primary";
+      } else if (marks >= 70) {
+        grade = "C";
+        alertClass = "alert-info";
+      } else if (marks >= 60) {
+        grade = "D";
+        alertClass = "alert-warning";
+      }
+
+      eltResult.className = `alert ${alertClass} text-center fw-bold`;
+      eltResult.innerHTML = `🎓 ${name}, your grade is <span class="text-uppercase">${grade}</span>`;
+    }
+
+    function clearResult() {
+      eltResult.className = "alert alert-info text-center fw-bold";
+      eltResult.innerHTML = "Result here";
+    }
+  </script>
+
 </body>
 
 </html>

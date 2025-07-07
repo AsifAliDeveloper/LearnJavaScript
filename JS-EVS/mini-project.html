@@ -1,69 +1,70 @@
+l
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Grading System</title>
-  <!-- Bootstrap & Font Awesome -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-  <style>
-    @media print {
-
-      button,
-      input {
-        display: none !important;
-      }
-
-      body {
-        padding: 20px;
-      }
-    }
-  </style>
+  <title>Learn JavaScript 17 - Student Grading</title>
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body>
   <div class="container-fluid">
     <div class="card my-4">
-      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-        <strong><i class="fa fa-arrow-circle-right"></i> Student Grading System</strong>
-        <div>
-          <button class="btn btn-light btn-sm me-2" onclick="sortByName()">Sort by Name</button>
-          <button class="btn btn-light btn-sm me-2" onclick="sortByMarks()">Sort by Marks</button>
-          <button class="btn btn-dark btn-sm" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
-        </div>
+      <div class="card-header bg-primary text-white">
+        <strong><i class="fa fa-clipboard-list me-2"></i> Array's Basics - Mini Project</strong>
       </div>
       <div class="card-body">
         <div class="row">
-          <!-- Form -->
-          <div class="col-md-4 col-sm-12 mb-3">
+          <!-- Form Column -->
+          <div class="col-md-4 mb-3">
             <div class="card shadow-sm">
               <div class="card-body">
                 <form onsubmit="event.preventDefault(); addStudent();">
                   <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtname" placeholder="Name" />
+                    <input type="text" class="form-control" id="txtname" placeholder="Name" autofocus />
                     <label for="txtname">Student's Name</label>
                   </div>
                   <div class="form-floating mb-3">
-                    <input type="number" class="form-control" min="0" max="100" id="txtmarks" placeholder="Marks" />
-                    <label for="txtmarks">Student's Marks</label>
+                    <input type="number" class="form-control" id="txtmarks" min="0" max="100" placeholder="Marks" />
+                    <label for="txtmarks">Marks (0-100)</label>
                   </div>
-                  <div class="mb-3 text-center">
-                    <button type="submit" class="btn btn-primary w-100">
-                      <i class="fa fa-plus"></i> <span id="btnLabel">Add</span>
+                  <div class="d-grid mb-2">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fa fa-plus me-1"></i> Add Student
                     </button>
                   </div>
+                  <div class="d-grid mb-2">
+                    <button type="button" class="btn btn-danger" onclick="clearAll()">
+                      <i class="fa fa-trash me-1"></i> Clear All
+                    </button>
+                  </div>
+                  <div class="alert alert-info p-2 text-center mb-1" id="infoPanel">
+                    Total: <strong><span id="studentCount">0</span></strong> |
+                    Avg Marks: <strong><span id="avgMarks">0</span></strong> |
+                    Topper: <strong><span id="topper">None</span></strong>
+                  </div>
                 </form>
-                <p class="text-center"><strong>Total Students: <span id="studentCount">0</span></strong></p>
               </div>
             </div>
           </div>
 
-          <!-- Table -->
-          <div class="col">
+          <!-- Table Column -->
+          <div class="col-md-8">
+            <div class="d-flex justify-content-end mb-2">
+              <button class="btn btn-outline-secondary btn-sm me-2" onclick="sortTableAsc()">
+                <i class="fa fa-sort-amount-down"></i> Sort Asc
+              </button>
+              <button class="btn btn-outline-secondary btn-sm" onclick="sortTableDesc()">
+                <i class="fa fa-sort-amount-up"></i> Sort Desc
+              </button>
+            </div>
             <div class="table-responsive">
-              <table class="table table-bordered table-striped align-middle">
+              <table class="table table-bordered table-striped align-middle table-primary">
                 <thead class="bg-primary text-white">
                   <tr>
                     <th>Name</th>
@@ -73,7 +74,7 @@
                   </tr>
                 </thead>
                 <tbody id="studentTableBody">
-                  <!-- Students will appear here -->
+                  <!-- Rows will be injected here -->
                 </tbody>
               </table>
             </div>
@@ -86,11 +87,9 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- JavaScript -->
   <script>
     const names = [];
     const marks = [];
-    let editIndex = -1;
 
     function calculateGrade(mark) {
       if (mark >= 90) return "A+";
@@ -101,48 +100,44 @@
       else return "F";
     }
 
-    function updateStudentCount() {
-      document.getElementById("studentCount").textContent = names.length;
-    }
+    function updateInfoPanel() {
+      const count = names.length;
+      document.getElementById("studentCount").textContent = count;
 
-    function saveToLocalStorage() {
-      localStorage.setItem("students", JSON.stringify({ names, marks }));
-    }
-
-    function loadFromLocalStorage() {
-      const saved = localStorage.getItem("students");
-      if (saved) {
-        const { names: savedNames, marks: savedMarks } = JSON.parse(saved);
-        names.push(...savedNames);
-        marks.push(...savedMarks);
-        renderTable();
+      if (count === 0) {
+        document.getElementById("avgMarks").textContent = "0";
+        document.getElementById("topper").textContent = "None";
+        return;
       }
+
+      const total = marks.reduce((sum, m) => sum + m, 0);
+      const avg = (total / count).toFixed(2);
+      const topIndex = marks.indexOf(Math.max(...marks));
+
+      document.getElementById("avgMarks").textContent = avg;
+      document.getElementById("topper").textContent = names[topIndex];
     }
 
     function renderTable() {
       const tbody = document.getElementById("studentTableBody");
       tbody.innerHTML = "";
-      names.forEach((name, index) => {
-        const mark = marks[index];
-        const grade = calculateGrade(mark);
+
+      for (let i = 0; i < names.length; i++) {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${name}</td>
-          <td>${mark}</td>
-          <td>${grade}</td>
+          <td>${names[i]}</td>
+          <td>${marks[i]}</td>
+          <td>${calculateGrade(marks[i])}</td>
           <td>
-            <button class="btn btn-warning btn-sm me-1" onclick="editStudent(${index})">
-              <i class="fa fa-pen"></i>
-            </button>
-            <button class="btn btn-danger btn-sm" onclick="deleteStudent(${index})">
+            <button class="btn btn-danger btn-sm" onclick="deleteStudent(${i})">
               <i class="fa fa-trash"></i>
             </button>
           </td>
         `;
         tbody.appendChild(row);
-      });
-      updateStudentCount();
-      document.getElementById("btnLabel").textContent = "Add";
+      }
+
+      updateInfoPanel();
     }
 
     function addStudent() {
@@ -157,63 +152,52 @@
         return;
       }
 
-      if (editIndex === -1) {
-        names.push(name);
-        marks.push(mark);
-      } else {
-        names[editIndex] = name;
-        marks[editIndex] = mark;
-        editIndex = -1;
-      }
+      names.push(name);
+      marks.push(mark);
 
       nameInput.value = "";
       marksInput.value = "";
       nameInput.focus();
 
-      saveToLocalStorage();
       renderTable();
     }
 
     function deleteStudent(index) {
       names.splice(index, 1);
       marks.splice(index, 1);
-      saveToLocalStorage();
       renderTable();
     }
 
-    function editStudent(index) {
-      document.getElementById("txtname").value = names[index];
-      document.getElementById("txtmarks").value = marks[index];
-      editIndex = index;
-      document.getElementById("btnLabel").textContent = "Update";
+    function clearAll() {
+      if (confirm("Are you sure you want to remove all student records?")) {
+        names.length = 0;
+        marks.length = 0;
+        renderTable();
+      }
     }
 
-    function sortByName() {
-      const combined = names.map((name, i) => ({ name, mark: marks[i] }));
-      combined.sort((a, b) => a.name.localeCompare(b.name));
-      updateArrays(combined);
+    function sortTableAsc() {
+      const indices = [...marks.keys()].sort((a, b) => marks[a] - marks[b]);
+      reorderData(indices);
     }
 
-    function sortByMarks() {
-      const combined = names.map((name, i) => ({ name, mark: marks[i] }));
-      combined.sort((a, b) => b.mark - a.mark);
-      updateArrays(combined);
+    function sortTableDesc() {
+      const indices = [...marks.keys()].sort((a, b) => marks[b] - marks[a]);
+      reorderData(indices);
     }
 
-    function updateArrays(arr) {
+    function reorderData(indices) {
+      const sortedNames = indices.map(i => names[i]);
+      const sortedMarks = indices.map(i => marks[i]);
       names.length = 0;
       marks.length = 0;
-      arr.forEach(({ name, mark }) => {
-        names.push(name);
-        marks.push(mark);
-      });
-      saveToLocalStorage();
+      names.push(...sortedNames);
+      marks.push(...sortedMarks);
       renderTable();
     }
 
-    // Load saved data on page load
-    window.onload = loadFromLocalStorage;
   </script>
+
 </body>
 
 </html>

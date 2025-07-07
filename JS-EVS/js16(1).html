@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn JavaScript 16 - Array Demo-Basic</title>
+  <!-- Bootstrap 5.3+ CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row justify-content-center my-4">
+      <div class="col-md-6 col-sm-10">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fa fa-stream me-2"></i> Array Demo-Basic </strong>
+          </div>
+          <div class="card-body">
+            <div class="mb-2 d-flex flex-wrap gap-2">
+              <button class="btn btn-primary" onclick="demo01()">
+                <i class="fa fa-arrow-circle-right"></i> Basics-1
+              </button>
+              <button class="btn btn-primary" onclick="demo02()">
+                <i class="fa fa-arrow-circle-right"></i> Basics-2
+              </button>
+              <button class="btn btn-primary" onclick="demo03()">
+                <i class="fa fa-arrow-circle-right"></i> Basics-3
+              </button>
+              <button class="btn btn-primary" onclick="demo04()">
+                <i class="fa fa-arrow-circle-right"></i> Slice
+              </button>
+              <button class="btn btn-primary" onclick="demo05()">
+                <i class="fa fa-arrow-circle-right"></i> Splice
+              </button>
+              <button class="btn btn-primary" onclick="demo06()">
+                <i class="fa fa-arrow-circle-right"></i> Demo 6
+              </button>
+              <button class="btn btn-danger ms-auto" onclick="clearOutput()">
+                <i class="fa fa-times-circle"></i> Clear Output
+              </button>
+            </div>
+            <div id="output" class="alert alert-secondary mt-3" style="white-space: pre-wrap; min-height: 120px;">
+              Output will appear here...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+    const output = document.getElementById("output");
+
+    function print(msg) {
+      output.innerText += msg + "\n";
+    }
+
+    function clearOutput() {
+      output.innerText = "Output will appear here...";
+    }
+
+    function demo01() {
+      output.innerText = "";
+      let data = [10, 76, 67, 24, 58, 94];
+      print("Array: " + data.join(", "));
+      print("Using for...of loop:");
+      for (const d of data) {
+        print(d);
+      }
+    }
+
+    function demo02() {
+      output.innerText = "";
+      const data = [10, 23, 50, 44];
+      data[1] = 99;
+      data.push(11);
+      print("Modified Array: " + data.join(", "));
+    }
+
+    function demo03() {
+      output.innerText = "";
+      const names = ["Asif", "Ali", "Abrar", "Imran"];
+      names[1] = "Usman";
+      names.push("Haseeb");
+      names.pop();
+      print("Names:");
+      for (const name of names) {
+        print(name);
+      }
+    }
+
+    function demo04() {
+      output.innerText = "";
+      let data = [10, 67, 23, 56, 39, 26];
+      print("Original Array: " + data.join(", "));
+      const newArray = data.slice(2, 3);
+      print("New Array (slice 2 to 3): " + newArray.join(", "));
+      print("Original After Slice: " + data.join(", "));
+    }
+
+    function demo05() {
+      output.innerText = "";
+      let data = [10, 67, 23, 56, 39, 26];
+      print("Original Array: " + data.join(", "));
+      const newArray = data.splice(2, 3);
+      print("Removed (splice): " + newArray.join(", "));
+      print("Remaining Array: " + data.join(", "));
+    }
+
+    function demo06() {
+      output.innerText = "";
+      const names = [];
+      const marks = [];
+
+      while (true) {
+        const name = prompt("Enter Student's Name (or type 'exit'):");
+        if (name === null || name.toLowerCase() === "exit") break;
+
+        const markInput = prompt("Enter Marks for " + name + ":");
+        const mark = Number(markInput);
+
+        if (isNaN(mark)) {
+          alert("Please enter a valid number for marks.");
+          continue;
+        }
+
+        names.push(name);
+        marks.push(mark);
+      }
+
+      print("Student Records:");
+      for (let i = 0; i < names.length; i++) {
+        print(`${i + 1}. ${names[i]} - ${marks[i]} marks`);
+      }
+    }
+  </script>
+
+</body>
+
+</html>

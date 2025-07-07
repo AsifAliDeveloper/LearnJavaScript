@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn JavaScript 04</title>
+  <title>Learn JavaScript 04 - Saving Calculator</title>
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
@@ -18,35 +18,38 @@
       <div class="col-md-6 col-sm-10">
         <div class="card shadow">
           <div class="card-header bg-primary text-white">
-            <strong><i class="fa fa-arrow-circle-right me-2"></i>Saving Calculator</strong>
+            <strong><i class="fa fa-calculator me-2"></i> Saving Calculator</strong>
           </div>
           <div class="card-body">
-            <form action="#">
+            <form onsubmit="event.preventDefault(); calculate();">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="txtName" placeholder="" />
+                <input type="text" class="form-control" id="txtName" placeholder="Name" />
                 <label for="txtName">Name</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtIncome" min="0" step="100" placeholder="" />
+                <input type="number" class="form-control" id="txtIncome" min="0" step="100" placeholder="Income" />
                 <label for="txtIncome">Income</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtRent" min="0" step="100" placeholder="" />
+                <input type="number" class="form-control" id="txtRent" min="0" step="100" placeholder="Home Rent" />
                 <label for="txtRent">Home Rent</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtBills" min="0" step="100" placeholder="" />
+                <input type="number" class="form-control" id="txtBills" min="0" step="100"
+                  placeholder="Utility Bills" />
                 <label for="txtBills">Utility Bills</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtOthers" min="0" step="100" placeholder="" />
+                <input type="number" class="form-control" id="txtOthers" min="0" step="100"
+                  placeholder="Other Expenses" />
                 <label for="txtOthers">Other Expenses</label>
               </div>
               <div class="mb-3">
-                <button type="button" class="btn btn-primary" onclick="calculate()"><i
-                    class="fa fa-arrow-circle-right"></i> Calculate</button>
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fa fa-arrow-circle-right me-1"></i> Calculate
+                </button>
               </div>
-              <div id="divResult" class="alert alert-primary mb-3">
+              <div id="divResult" class="alert alert-info text-center fw-bold">
                 Result here
               </div>
             </form>
@@ -61,43 +64,43 @@
 
   <script>
     function calculate() {
-      // get txtName, txtIncome, txtRent, txtBills and txtOthers controls
-      const eltName = document.getElementById("txtName");
-      const eltIncome = document.getElementById("txtIncome");
-      const eltRent = document.getElementById("txtRent");
-      const eltBills = document.getElementById("txtBills");
-      const eltOthers = document.getElementById("txtOthers");
+      const name = document.getElementById("txtName").value.trim();
+      const income = Number(document.getElementById("txtIncome").value);
+      const rent = Number(document.getElementById("txtRent").value);
+      const bills = Number(document.getElementById("txtBills").value);
+      const others = Number(document.getElementById("txtOthers").value);
+      const result = document.getElementById("divResult");
 
-      // read name, income, rent, bills and others from controls
-      // convert income, rent, bills and others expenses to numbers
-      const n = eltName.value;  // read value from eltName
-      const i = Number(eltIncome.value);  // read value from eltIncome and convert to number
-      const r = Number(eltRent.value);
-      const b = Number(eltBills.value);
-      const o = Number(eltOthers.value);
+      // Validation
+      if (!name || income <= 0) {
+        result.className = "alert alert-warning text-center fw-bold";
+        result.innerHTML = "⚠️ Please enter a valid name and income.";
+        return;
+      }
 
+      const totalExpenses = rent + bills + others;
+      const savings = income - totalExpenses;
 
+      if (savings < 0) {
+        result.className = "alert alert-danger text-center fw-bold";
+        result.innerHTML = `❌ ${name}, your expenses exceed your income. You're in deficit.`;
+      } else {
+        const percentage = ((savings / income) * 100).toFixed(2);
+        result.className = "alert alert-success text-center fw-bold";
+        result.innerHTML = `
+          💼 ${name}, you saved <strong>PKR ${savings.toLocaleString()}</strong><br>
+          💸 That's <strong>${percentage}%</strong> of your income (PKR ${income.toLocaleString()}).
+        `;
+      }
 
-      // calculate saving in percentage of income
-      const s = i - (r + b + o); // calculate saving 
-      const p = s / i * 100; // calculate of saving percentage of income
-
-      // get element to show result 
-      const eltResult = document.getElementById("divResult");
-      // display message having name and saving in percentage in above element
-      eltResult.innerHTML = `${n} your saving is <strong>${p}% (${s} out of ${i})</strong> of your Income`;
-
-      // set value of txtName, txtIncome, txtRent, txtBills and other expernses to empty set
-      eltName.value = "";
-      eltIncome.value = "";
-      eltRent.value = "";
-      eltBills.value = "";
-      eltOthers.value = "";
-
-      // set focus to txtName
-      eltName.focus();
+      // Reset form
+      document.getElementById("txtName").value = "";
+      document.getElementById("txtIncome").value = "";
+      document.getElementById("txtRent").value = "";
+      document.getElementById("txtBills").value = "";
+      document.getElementById("txtOthers").value = "";
+      document.getElementById("txtName").focus();
     }
-
   </script>
 
 </body>

@@ -4,65 +4,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>learn JavaScript 12</title>
+  <title>Learn JavaScript 12 - Nested Loops</title>
+
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
+
+  <!-- Font Awesome 6.5.1 CDN -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
 
   <div class="container-fluid">
-    <div class="row justify-content-center my-3">
-      <div class="col-6">
-        <div class="card">
+    <div class="row justify-content-center my-4">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <!-- Card Header -->
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fas fa-code me-2"></i> Nested Loop Examples</strong>
+          </div>
+
+          <!-- Card Body -->
           <div class="card-body">
-            <div class="card-header bg-primary text-white">
-              <strong><i class="fa fa-calculator"></i> Nested Loop Examples </strong>
+            <!-- Buttons -->
+            <div class="mb-3">
+              <button class="btn btn-primary w-100 mb-2" onclick="numberTriangle()">
+                <i class="fas fa-sort-numeric-up-alt me-2"></i> Number Triangle
+              </button>
+
+              <button class="btn btn-primary w-100 mb-2" onclick="reverseNumberTriangle()">
+                <i class="fas fa-sort-numeric-down-alt me-2"></i> Reverse Number Triangle
+              </button>
+
+              <a class="btn btn-primary w-100 mb-2" href="./multiplication-Table.html" target="_blank">
+                <i class="fas fa-table me-2"></i> Multiplication Table
+              </a>
             </div>
-            <div class="card-body">
-              <div class="mb-3">
-                <button type="button" class="btn btn-primary mb-2" onclick="numberTriangle()">
-                  <i class="fa fa-arrow-circle-right"></i> Number Triangle
-                </button>
-                <button type="button" class="btn btn-primary mb-2" onclick="reverseNumberTriangle()">
-                  <i class="fa fa-arrow-circle-right"></i> Reverse Number Triangle
-                </button>
-                <a class="btn btn-primary mb-2" href="./multiplication-Table.html" target="_blank">
-                  <i class="fa fa-arrow-circle-right"></i> Multiplication Table
-                </a>
-              </div>
+
+            <!-- Output Section -->
+            <div id="output" class="bg-light border rounded p-3 text-monospace" style="min-height: 150px;">
+              <!-- Loop results will be shown here -->
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+  <!-- JavaScript -->
+  <script>
+    // Number Triangle Function
+    const numberTriangle = () => {
+      const output = document.getElementById("output");
+      output.innerHTML = ""; // Clear previous output
 
-      const numberTriangle = () => {
-        for (let i = 1; i <= 5; i++) {
-          for (let j = 1; j <= i; j++) {
-            document.write(`${j}`);
-          }
-          document.write(`<br />`);
+      for (let i = 1; i <= 5; i++) {
+        let row = "";
+        for (let j = 1; j <= i; j++) {
+          row += j + " ";
         }
+        output.innerHTML += row + "<br>";
       }
+    }
 
-      const reverseNumberTriangle = () => {
-        for (let i = 5; i >= 1; i--) {
-          for (let j = i; j >= 1; j--) {
-            document.write(`${j}`);
-          }
-          document.write(`<br />`);
+    // Reverse Number Triangle Function
+    const reverseNumberTriangle = () => {
+      const output = document.getElementById("output");
+      output.innerHTML = ""; // Clear previous output
+
+      for (let i = 5; i >= 1; i--) {
+        let row = "";
+        for (let j = i; j >= 1; j--) {
+          row += j + " ";
         }
+        output.innerHTML += row + "<br>";
       }
-
-    </script>
+    }
+  </script>
 
 </body>
 

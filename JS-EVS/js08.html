@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>learn JavaScript 08</title>
+  <title>Learn JavaScript 08 - Investment Calculator</title>
   <!-- Bootstrap 5.3+ CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
@@ -14,68 +14,81 @@
 <body>
 
   <div class="container-fluid">
-    <div class="row justify-content-center my-3">
-      <div class="col-6">
-        <div class="card">
+    <div class="row justify-content-center my-4">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fas fa-calculator me-2"></i> Investment Calculator</strong>
+          </div>
           <div class="card-body">
-            <div class="card-header bg-primary text-white">
-              <strong><i class="fa fa-calculator"></i> Investemt calculator </strong>
-            </div>
-            <div class="card-body">
-              <form action="#">
-                <div class="form-floating mb-3">
-                  <input type="number" class="form-control" id="txtPrincipal" min="0" step="50000" placeholder="" />
-                  <label for="txtPrincipal">Investment Amount</label>
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="number" class="form-control" id="txtDuration" min="0" step="1" max="10" placeholder="" />
-                  <label for="txtDuration">Investment Duration in Years</label>
-                </div>
-                <div class="mb-3">
-                  <button type="button" class="btn btn-primary" onclick="calculate()">
-                    <i class="fa fa-circle-right"></i> Calculate
-                  </button>
-                </div>
-                <div id="divResult" class="alert alert-primary mb-3">
-                  Result here
-                </div>
-              </form>
-            </div>
+            <form id="investmentForm" onsubmit="event.preventDefault(); calculate();">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="txtPrincipal" placeholder="Principal Amount" step="50000"
+                  min="100000" max="10000000" required oninput="clearResult()" />
+                <label for="txtPrincipal">Investment Amount (PKR)</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="txtDuration" placeholder="Duration" step="1" min="1"
+                  max="10" required oninput="clearResult()" />
+                <label for="txtDuration">Investment Duration (Years)</label>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fas fa-arrow-circle-right me-2"></i> Calculate
+                </button>
+              </div>
+              <div id="divResult" class="alert alert-info text-center fw-bold">
+                Result here
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+  <!-- JavaScript -->
+  <script>
+    const eltPrincipal = document.getElementById("txtPrincipal");
+    const eltDuration = document.getElementById("txtDuration");
+    const eltResult = document.getElementById("divResult");
 
-      function calculate() {
+    function calculate() {
+      const p = Math.floor(Number(eltPrincipal.value));
+      const d = Math.floor(Number(eltDuration.value));
+      const rate = 10 / 100;
 
-        const eltPrincipal = document.getElementById("txtPrincipal");
-        const eltDuration = document.getElementById("txtDuration");
-        const eltResult = document.getElementById("divResult");
-        const p = Number(eltPrincipal.value);
-        const d = Number(eltDuration.value);
-        const i = 10 / 100;
-        if (p >= 100000 && d >= 1 && d <= 10) {
-          const a = Math.floor(p * Math.pow(1 + i, d));
-          eltResult.innerHTML = `<div> Investment Amount <strong>${p}</strong></div>`;
-          eltResult.innerHTML += `<div> Investment Duration <strong>${d}</strong></div>`;
-          eltResult.innerHTML += `<div> Profit of Investment <strong>${a - p}</strong></div>`;
-          eltResult.innerHTML += `<div> Final Amount <strong>${a}</strong></div>`;
-        }
-        else {
-          eltResult.innerHTML = `<div> Invalid input, try again </div>`;
-        }
-        eltPrincipal.value = "";
-        eltDuration.value = "";
-        eltPrincipal.focus();
+      if (p >= 100000 && d >= 1 && d <= 10) {
+        const a = Math.floor(p * Math.pow(1 + rate, d));
+        const profit = a - p;
 
+        eltResult.className = "alert alert-success text-center fw-bold";
+        eltResult.innerHTML = `
+          <div>💰 Investment Amount: <strong>PKR ${p.toLocaleString()}</strong></div>
+          <div>📆 Duration: <strong>${d} year(s)</strong></div>
+          <div>📈 Total Profit: <strong>PKR ${profit.toLocaleString()}</strong></div>
+          <div>🏦 Final Amount: <strong>PKR ${a.toLocaleString()}</strong></div>
+        `;
+      } else {
+        eltResult.className = "alert alert-warning text-center fw-bold";
+        eltResult.innerHTML = `❌ Please enter a valid amount (≥ 100,000 PKR) and duration (1–10 years).`;
       }
 
-    </script>
+      // reset inputs
+      eltPrincipal.value = "";
+      eltDuration.value = "";
+      eltPrincipal.focus();
+    }
+
+    function clearResult() {
+      eltResult.className = "alert alert-info text-center fw-bold";
+      eltResult.innerHTML = "Result here";
+    }
+  </script>
+
 </body>
 
 </html>
