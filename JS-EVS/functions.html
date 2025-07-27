@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment # 6 - Functions</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row justify-content-center my-3">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <strong><i class="fa fa-arrow-circle-right"></i>Assignment#6 Functions</strong>
+          </div>
+          <div class="card-body">
+            <button type="button" class="btn btn-primary mb-2" onclick="sumPrices()">
+              <i class="fa fa-arrow-circle-right"></i> 1. Basic Function - Sum of Two Numbers
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="totalCost()">
+              <i class="fa fa-arrow-circle-right"></i> 2. Function with Default Parameters
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="areaSquare()">
+              <i class="fa fa-arrow-circle-right"></i> 3. Function Expression - Area of Square
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="areaSquareArrow()">
+              <i class="fa fa-arrow-circle-right"></i> 4. Arrow Function
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="createAdder()">
+              <i class="fa fa-arrow-circle-right"></i> 5. Function Returning Another Function
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="applyOperator()">
+              <i class="fa fa-arrow-circle-right"></i> 6. Higher-Order Function
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="applyFunctions()">
+              <i class="fa fa-arrow-circle-right"></i> 7. Array of Functions
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="alertUpperCase()">
+              <i class="fa fa-arrow-circle-right"></i> 8. Callback Function
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="repeatString()">
+              <i class="fa fa-arrow-circle-right"></i> 9. Arrow Function with Default Parameters
+            </button>
+            <button type="button" class="btn btn-primary  mb-2" onclick="factorial()">
+              <i class="fa fa-arrow-circle-right"></i> 10. Recursive Function
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="CreateNumberList()">
+              <i class="fa fa-arrow-circle-right"></i> 11. Function Returning an Array
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="checkNumber()">
+              <i class="fa fa-arrow-circle-right"></i> 12. Function with Multiple Returns
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="checkEvenOdd()">
+              <i class="fa fa-arrow-circle-right"></i> 13. Even/Odd with Callbacks
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="calculate()">
+              <i class="fa fa-arrow-circle-right"></i> 14. Simple Math Operations
+            </button>
+            <button type="button" class="btn btn-primary mb-2" onclick="findMax">
+              <i class="fa fa-arrow-circle-right"></i> 15. Find Maximum in Array
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Basic Function – Sum of Two Numbers
+    function sumPrices(price1, price2) {
+      return price1 + price2;
+    }
+    console.log(`Basic Function Sum of Two Numbers, ${sumPrices(10, 10)}`); // 20
+    console.log(`Basic Function Sum of Two Numbers, ${sumPrices(10, 20)}`); // 30
+
+    // 2. Function with Default Parameters
+    function totalCost(price, quantity = 1) {
+      return price * quantity;
+    }
+    console.log(`Function with Default Parameters, ${totalCost(100)}`);     // 100 (default quantity = 1)
+    console.log(`Function with Default Parameters, ${totalCost(100, 3)}`);  // 300
+    console.log(`Function with Default Parameters, ${totalCost(500, 9)}`);  // 4500
+
+    // 3. Function Expression
+    const areaSquare = function (side) {
+      return side * side;
+    }
+    console.log(`Function Expression, ${areaSquare(50)}`); // 2500
+    console.log(`Function Expression, ${areaSquare(4)}`); // 16
+
+    // 4. Arrow Function
+    const areaSquareArrow = (side) => side * side;
+    console.log(`Arrow Function, ${areaSquareArrow(5)}`); // 25
+    console.log(`Arrow Function, ${areaSquareArrow(9)}`);  // 81
+
+    // 5. Function Returning Another Function
+    function createAdder(base) {
+      return function (num) {
+        return base + num;
+      };
+    }
+    const addFive = createAdder(5);
+    console.log(`Function Returning Another Function, ${addFive(10)}`); // 15
+    console.log(`Function Returning Another Function, ${addFive(45)}`); // 50
+    const addTen = createAdder(10);
+    console.log(`Function Returning Another Function, ${addTen(10)}`); // 20
+    console.log(`Function Returning Another Function, ${addTen(90)}`); // 100
+
+    // 6. Higher-Order Function
+    function applyOperator(operation, number) {
+      return operation(number);
+    }
+    const double = n => n * 2;
+    console.log(`Higher-Order Function, ${applyOperator(double, 5)}`); // 10
+    console.log(`Higher-Order Function, ${applyOperator(double, 90)}`); // 180
+
+    // 7. Array of Functions
+    function applyFunctions(funcArray, num) {
+      let result = num;
+      for (let func of funcArray) {
+        result = func(result);
+      }
+      return result;
+    }
+    const add1 = x => x + 1;
+    const mul2 = x => x * 2;
+    console.log(`Array of Functions, ${applyFunctions([add1, mul2], 5)}`);
+    console.log(`Array of Functions, ${applyFunctions([add1, mul2], 10)}`);
+
+    // 8. Callback Function
+    function alertUpperCase(callback, str) {
+      callback(str.toUpperCase());
+    }
+    alertUpperCase(msg => console.log(msg), "Hello");
+    alertUpperCase(msg => console.log(msg), "Asif");
+    alertUpperCase(msg => console.log(msg), "Ali");
+
+    // 9. Arrow Function with Default Parameters
+    const repeatString = (str, Time = 1) => str.repeat(Time);
+    console.log(repeatString("Hi ", 3));
+
+    // 10. Recursive Function
+    function factorial(n) {
+      if (n <= 1) return 1;
+      return n * factorial(n - 1);
+    }
+    console.log(factorial(5));
+
+    // 11. Function Returning an Array
+    function CreateNumberList(n) {
+      let arr = [];
+      for (let i = 1; i <= n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    }
+    console.log(CreateNumberList(5));
+    console.log(CreateNumberList(10));
+    console.log(CreateNumberList(50));
+
+    // 12. Function with Multiple Returns
+    function checkNumber(num) {
+      if (num > 0) return 'Positive';
+      else if (num < 0) return 'Negative';
+      else "Zero";
+    }
+    console.log(checkNumber(-5));
+    console.log(checkNumber(5));
+
+    // 13. Even/Odd with Callbacks
+    function checkEvenOdd(num, evenCallback, oddCalback) {
+      if (num % 2 === 0) {
+        evenCallback();
+      } else {
+        oddCalback();
+      }
+    }
+    checkEvenOdd(4, () => console.log("Even"), () => console.log("Odd"));
+
+    // 14. Simple Math Operations
+    function calculate(num1, num2, operation) {
+      switch (operation) {
+        case 'add': return num1 + num2;
+        case 'subtract': return num1 - num2;
+        case 'multiply': return num1 * num2;
+        case 'divide': return num2 !== 0 ? num1 / num2 : 'Error: Divide by Zero';
+        default: return 'Invalid operation';
+      }
+    }
+    console.log(calculate(10, 2, 'add'));
+    console.log(calculate(10, 2, 'subtract'));
+    console.log(calculate(10, 2, 'multiply'));
+    console.log(calculate(10, 2, 'divide'));
+
+    // 15. Find Maximum in Array
+    function findMax(arr) {
+      let max = arr[0];
+      for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+          max = arr[i];
+        }
+      }
+      return max;
+    }
+    console.log(findMax([10, 50, 30, 70, 20]));
+    console.log(findMax([10, 50, 30, 90, 20]));
+    console.log(findMax([10, 50, 30, 40, 20]));
+
+  </script>
+</body>
+
+</html>
